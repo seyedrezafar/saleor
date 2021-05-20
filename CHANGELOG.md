@@ -179,6 +179,8 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add channel data to Order webhook - #7299 by @krzysztofwolski
 - Always create new checkout in `checkoutCreate` mutation - #7318 by @IKarbowiak
   - deprecate `created` return field on `checkoutCreate` mutation
+- Use root level channel argument for filtering and sorting - #7374 by @IKarbowiak
+  - drop `channel` field from filters and sorters
 
 ### Other
 
