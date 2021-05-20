@@ -66,9 +66,22 @@ class Attribute(CountableDjangoObjectType):
     name = graphene.String(description=AttributeDescriptions.NAME)
     slug = graphene.String(description=AttributeDescriptions.SLUG)
 
-    values = graphene.List(AttributeValue, description=AttributeDescriptions.VALUES)
-
+    values = graphene.List(
+        AttributeValue,
+        description=AttributeDescriptions.VALUES,
+        deprecation_reason=(
+            "Use the `choices` field instead. It will be removed in Saleor 3.0."
+        ),
+    )
+    choices = graphene.List(AttributeValue, description=AttributeDescriptions.VALUES)
     value_required = graphene.Boolean(
+        description=AttributeDescriptions.VALUE_REQUIRED,
+        deprecation_reason=(
+            "Use the `choiceRequired` field instead. It will be removed in Saleor 3.0."
+        ),
+        required=True,
+    )
+    choice_required = graphene.Boolean(
         description=AttributeDescriptions.VALUE_REQUIRED, required=True
     )
     visible_in_storefront = graphene.Boolean(
@@ -104,6 +117,10 @@ class Attribute(CountableDjangoObjectType):
         return AttributeValuesByAttributeIdLoader(info.context).load(root.id)
 
     @staticmethod
+    def resolve_choices(root: models.Attribute, info):
+        return AttributeValuesByAttributeIdLoader(info.context).load(root.id)
+
+    @staticmethod
     @permission_required(ProductPermissions.MANAGE_PRODUCTS)
     def resolve_private_meta(root: models.Attribute, _info):
         return resolve_private_meta(root, _info)
@@ -115,6 +132,11 @@ class Attribute(CountableDjangoObjectType):
     @staticmethod
     @permission_required(ProductPermissions.MANAGE_PRODUCTS)
     def resolve_value_required(root: models.Attribute, *_args):
+        return root.value_required
+
+    @staticmethod
+    @permission_required(ProductPermissions.MANAGE_PRODUCTS)
+    def resolve_choice_required(root: models.Attribute, *_args):
         return root.value_required
 
     @staticmethod

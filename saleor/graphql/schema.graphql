@@ -405,8 +405,10 @@ type Attribute implements Node & ObjectWithMetadata {
   inputType: AttributeInputTypeEnum
   name: String
   slug: String
-  values: [AttributeValue]
-  valueRequired: Boolean!
+  values: [AttributeValue] @deprecated(reason: "Use the `choices` field instead. It will be removed in Saleor 3.0.")
+  choices: [AttributeValue]
+  valueRequired: Boolean! @deprecated(reason: "Use the `choiceRequired` field instead. It will be removed in Saleor 3.0.")
+  choiceRequired: Boolean!
   visibleInStorefront: Boolean!
   filterableInStorefront: Boolean!
   filterableInDashboard: Boolean!
