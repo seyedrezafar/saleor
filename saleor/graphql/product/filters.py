@@ -25,7 +25,7 @@ from ..core.filters import (
     MetadataFilterBase,
     ObjectTypeFilter,
 )
-from ..core.types import ChannelFilterInputObjectType, FilterInputObjectType
+from ..core.types import FilterInputObjectType
 from ..core.types.common import IntRangeInput, PriceRangeInput
 from ..utils import get_nodes, resolve_global_ids_to_primary_keys
 from ..utils.filters import filter_fields_containing_value, filter_range_field
@@ -479,7 +479,7 @@ class ProductTypeFilter(MetadataFilterBase):
         fields = ["search", "configurable", "product_type"]
 
 
-class ProductFilterInput(ChannelFilterInputObjectType):
+class ProductFilterInput(FilterInputObjectType):
     class Meta:
         filterset_class = ProductFilter
 
@@ -489,7 +489,7 @@ class ProductVariantFilterInput(FilterInputObjectType):
         filterset_class = ProductVariantFilter
 
 
-class CollectionFilterInput(ChannelFilterInputObjectType):
+class CollectionFilterInput(FilterInputObjectType):
     class Meta:
         filterset_class = CollectionFilter
 
